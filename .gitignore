@@ -1,0 +1,40 @@
+# Python関連
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+ENV/
+*.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode関連
+.vscode/
+
+# OSファイル
+.DS_Store
+Thumbs.db
+
+# ログファイル
+*.log
+
+# Neo4j関連
+data/
+logs/
+
+# Next.js関連
+.next/
+out/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.env.local
+.env.development.local
