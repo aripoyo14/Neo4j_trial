@@ -1,10 +1,17 @@
-// frontend/next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next'
+
+/** @type {NextConfig} */
+const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Turbopack は create-next-app の --turbo で有効なので、明示不要。
-  // もしどうしても設定をいじりたい場合は:
-  // turbopack: { dev: true },  // Next 15.3 以降の書き方
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:8000/api/:path*', // Docker Compose のサービス名を使う
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;
+

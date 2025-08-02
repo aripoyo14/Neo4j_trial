@@ -1,9 +1,25 @@
 from neo4j import GraphDatabase
 import os
 
-uri = os.getenv("NEO4J_URI")
-user = os.getenv("NEO4J_USER")
-pwd = os.getenv("NEO4J_PASSWORD")
+# 環境変数から取得、デフォルト値を設定
+uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+user = os.getenv("NEO4J_USER", "neo4j")
+pwd = os.getenv("NEO4J_PASSWORD", "password")
+
+# URIが空でないことを確認
+if not uri:
+    raise ValueError("NEO4J_URI environment variable is not set")
+
+# 適切なURIスキームを使用していることを確認
+if not uri.startswith(('bolt://', 'neo4j://')):
+    # デフォルトでboltスキームを使用
+    if '://' not in uri:
+        uri = f"bolt://{uri}"
+    else:
+        raise ValueError(f"Unsupported URI scheme. Use 'bolt://' or 'neo4j://'. Got: {uri}")
+
+print(f"Connecting to Neo4j at: {uri}")
+
 driver = GraphDatabase.driver(uri, auth=(user, pwd))
 
 def fetch_top_people(tag_weights: list[dict], threshold: float, limit: int):
